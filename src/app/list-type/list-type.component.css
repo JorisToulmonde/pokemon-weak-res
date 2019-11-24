@@ -1,0 +1,170 @@
+* {box-sizing: border-box;}
+
+.wrapper {
+  max-width: 500px;
+  margin: 3% auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(50px, auto);
+}
+
+.wrapper > div > div > p{
+  margin: 0;
+}
+
+.result{
+  width: 100%;
+}
+
+.result > table{
+  margin: 0 auto;
+  border: 1px solid grey;
+  border-radius: 5px;
+}
+
+.result > table > tr > th, td{
+  padding: 10px 10px;
+}
+
+.result > table > tr > td{
+  text-align: center;
+  height: 38px;
+}
+
+.type {
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 1em;
+  color: black;
+  text-align: center;
+}
+
+.type-selected {
+  -webkit-box-shadow: inset 0px 0px 29px 7px rgba(0,0,0,0.75);
+  -moz-box-shadow: inset 0px 0px 29px 7px rgba(0,0,0,0.75);
+  box-shadow: inset 0px 0px 29px 7px rgba(0,0,0,0.75);
+}
+
+.p-selected {
+  color: white;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.type:hover {
+  opacity: .7;
+  cursor: pointer;
+}
+
+.Feu {
+  background-color: #ff9b54;
+}
+
+.Eau {
+  background-color: #4e90d6;
+}
+
+.Plante {
+  background-color: #60b953;
+}
+
+.Acier {
+  background-color: #52869b;
+}
+
+.Combat {
+  background-color: #c03028;
+}
+
+.Dragon {
+  background-color: #0968c1;
+}
+
+.Electrik {
+  background-color: #f4d13a;
+}
+
+.Fee {
+  background-color: #ec8ce4;
+}
+
+.Glace {
+  background-color: #73cec0;
+}
+
+.Insecte {
+  background-color: #90c12c;
+}
+
+.Normal {
+  background-color: #9099a1;
+}
+
+.Poison {
+  background-color: #a566c7;
+}
+
+.Psy {
+  background-color: #f86d74;
+}
+
+.Roche {
+  background-color: #c7b78b;
+}
+
+.Sol {
+  background-color: #d97745;
+}
+
+.Spectre {
+  background-color: #5269ac;
+}
+
+.Tenebre {
+  background-color: #5a5264;
+}
+
+.Vol {
+  background-color: #a7c1ef;
+}
+
+.tabletype{
+  background-color: #e7ddfd;
+}
+
+.tabletype > tr > th {
+  background-color: #fcfcfc;
+  border-radius: 3px;
+}
+
+.tabletype > tr > td {
+  border-radius: 3px;
+}
+
+.tabletype > tr > td.weaknessx4 {
+  background-color: #ff5e4d;
+}
+
+.tabletype > tr > td.weaknessx2 {
+  background-color: #ffaaaa;
+}
+
+.tabletype > tr > td.resistx4 {
+  background-color: #3af24b;
+}
+
+.tabletype > tr > td.resistx2 {
+  background-color: #aaffaa;
+}
+
+.tabletype > tr > td.immunity{
+  background-color: #aaaaaa;
+}
+
+.tabletype > tr > td.standard{
+  background-color: #ffffaa;
+}
+
+
+
