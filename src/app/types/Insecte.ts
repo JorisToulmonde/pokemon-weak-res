@@ -4,6 +4,6 @@ export class Insecte extends Type{
   constructor() {
     super();
     this.element = 'Insecte';
-    this.icon = '../../assets/img/Insecte.png';
+    this.icon = './assets/img/Insecte.png';
   }
 }

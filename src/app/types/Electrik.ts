@@ -4,6 +4,6 @@ export class Electrik extends Type{
   constructor() {
     super();
     this.element = 'Electrik';
-    this.icon = '../../assets/img/Electrik.png';
+    this.icon = './assets/img/Electrik.png';
   }
 }

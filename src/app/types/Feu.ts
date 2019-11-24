@@ -4,6 +4,6 @@ export class Feu extends Type{
   constructor() {
     super();
     this.element = 'Feu';
-    this.icon = '../../assets/img/Feu.png';
+    this.icon = './assets/img/Feu.png';
   }
 }

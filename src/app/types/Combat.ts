@@ -4,6 +4,6 @@ export class Combat extends Type{
   constructor() {
     super();
     this.element = 'Combat';
-    this.icon = '../../assets/img/Combat.png';
+    this.icon = './assets/img/Combat.png';
   }
 }
