@@ -1,10 +1,32 @@
+<div class="input-pokemon">
+  <form (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input
+        type="text"
+        placeholder="Choisis un Pokemon"
+        matInput
+        [formControl]="myForm"
+        [matAutocomplete]="auto"
+        [(ngModel)]="pokemon"
+      />
+
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of (filteredPokemon | async)" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+
+</div>
+
 <div class="wrapper">
     <h3>Type 1 : {{typeOne.getElement()}}</h3>
     <h3>Type 2 : {{typeTwo.getElement()}}</h3>
     <br/>
-  <div *ngFor="let type of allTypes; let i = index" (click)="displayWeakAndRes(type.getElement())">
-    <div [className]="type.getElement()+' type'" [class.type-selected]="typeOne.getElement() === type.getElement() || typeTwo.getElement() === type.getElement()">
-        <p [class.p-selected]="typeOne.getElement() === type.getElement() || typeTwo.getElement() === type.getElement()">{{ type.getElement() }}</p>
+  <div *ngFor="let type of allTypes; let i = index" (click)="weakAndRes(type.getElement())">
+    <div [className]="type.getElement()+' type'" [class.type-selected]="isTypeSelected(type)">
+        <p [class.p-selected]="isTypeSelected(type)">{{ type.getElement() }}</p>
     </div>
   </div>
 </div>
@@ -18,7 +40,7 @@
     </tr>
     <tr>
       <ng-container *ngFor="let type of allTypes" >
-        <td *ngIf="finalIgnore.indexOf(type.element) != -1" [className]="'immunity'">x0</td>
+        <td *ngIf="checkIsImmune(type.element)" class="immunity">x0</td>
         <td *ngIf="checkIsResist(type.element)" [className]="'resistx'+calculResist(type.element)">x1/{{ calculResist(type.element) }}</td>
         <td *ngIf="checkIsWeakness(type.element)" [className]="'weaknessx'+calculWeak(type.element)">x{{ calculWeak(type.element) }}</td>
         <td *ngIf="checkStandardType(type.element)" class="standard"></td>

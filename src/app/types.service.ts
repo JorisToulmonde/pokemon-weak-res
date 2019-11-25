@@ -18,6 +18,9 @@ import { Electrik } from './types/Electrik';
 import { Dragon } from './types/Dragon';
 import { Combat } from './types/Combat';
 import { Normal } from './types/Normal';
+import pokemonFr from '../assets/dictionnary/pokemon-fr.json';
+import typeEn from '../assets/dictionnary/type-en.json';
+import typeFr from '../assets/dictionnary/type-fr.json';
 
 @Injectable({
   providedIn: 'root'
@@ -118,5 +121,17 @@ export class TypesService {
       }
       return inter.indexOf(type) == -1
     });
+  }
+
+  getFrTypeOf(type: string){
+    return typeFr[typeEn.indexOf(type.charAt(0).toUpperCase()+type.slice(1))];
+  }
+
+  getId(pokemon: string){
+    return pokemonFr.indexOf(pokemon) + 1;
+  }
+
+  getTypeBy(element: string){
+    return this.allTypes.filter(x => x.element === element)[0];
   }
 }

@@ -2,7 +2,7 @@
 
 .wrapper {
   max-width: 500px;
-  margin: 3% auto;
+  margin: 1% auto 3%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
@@ -11,6 +11,11 @@
 
 .wrapper > div > div > p{
   margin: 0;
+}
+
+.input-pokemon{
+  margin: 2% auto 0%;
+  text-align: center;
 }
 
 .result{
