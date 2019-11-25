@@ -1,26 +1,27 @@
-import { Acier } from './types/Acier';
+import { Acier } from '../types/Acier';
 import { Injectable } from '@angular/core';
-import { Type } from './types/Type';
-import { Feu } from './types/Feu';
-import { Eau } from './types/Eau';
-import { Plante } from './types/Plante';
-import { Vol } from './types/Vol';
-import { Tenebre } from './types/Tenebre';
-import { Spectre } from './types/Spectre';
-import { Sol } from './types/Sol';
-import { Roche } from './types/Roche';
-import { Psy } from './types/Psy';
-import { Poison } from './types/Poison';
-import { Insecte } from './types/Insecte';
-import { Glace } from './types/Glace';
-import { Fee } from './types/Fee';
-import { Electrik } from './types/Electrik';
-import { Dragon } from './types/Dragon';
-import { Combat } from './types/Combat';
-import { Normal } from './types/Normal';
-import pokemonFr from '../assets/dictionnary/pokemon-fr.json';
-import typeEn from '../assets/dictionnary/type-en.json';
-import typeFr from '../assets/dictionnary/type-fr.json';
+import { Type } from '../types/Type';
+import { Feu } from '../types/Feu';
+import { Eau } from '../types/Eau';
+import { Plante } from '../types/Plante';
+import { Vol } from '../types/Vol';
+import { Tenebre } from '../types/Tenebre';
+import { Spectre } from '../types/Spectre';
+import { Sol } from '../types/Sol';
+import { Roche } from '../types/Roche';
+import { Psy } from '../types/Psy';
+import { Poison } from '../types/Poison';
+import { Insecte } from '../types/Insecte';
+import { Glace } from '../types/Glace';
+import { Fee } from '../types/Fee';
+import { Electrik } from '../types/Electrik';
+import { Dragon } from '../types/Dragon';
+import { Combat } from '../types/Combat';
+import { Normal } from '../types/Normal';
+import pokemonFr from '../../assets/dictionnary/pokemon-fr.json';
+import typeEn from '../../assets/dictionnary/type-en.json';
+import typeFr from '../../assets/dictionnary/type-fr.json';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +55,11 @@ export class TypesService {
   finalResist: any;
   finalIgnored: any;
 
+  pokemonSubject = new Subject<string>();
+  pokemon: string;
+
+  private pokemonApi = "https://pokeapi.co/api/v2/pokemon/";
+
   constructor() {
     this.initializeTypes();
   }
@@ -77,6 +83,10 @@ export class TypesService {
     this.spectre.initializeYou([this.spectre, this.tenebre], [this.insecte, this.poison], [this.normal]);
     this.tenebre.initializeYou([this.combat, this.fee, this.insecte], [this.spectre, this.tenebre], [this.psy]);
     this.vol.initializeYou([this.electrik, this.glace, this.roche], [this.combat, this.insecte, this.plante], [this.sol]);
+  }
+
+  emitPokemonSubject() {
+    this.pokemonSubject.next(this.pokemon);
   }
 
   getAllTypes(){
@@ -133,5 +143,9 @@ export class TypesService {
 
   getTypeBy(element: string){
     return this.allTypes.filter(x => x.element === element)[0];
+  }
+
+  getApiURL(){
+    return this.pokemonApi;
   }
 }

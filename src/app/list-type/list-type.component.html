@@ -1,24 +1,4 @@
-<div class="input-pokemon">
-  <form (ngSubmit)="onSubmit()">
-    <mat-form-field>
-      <input
-        type="text"
-        placeholder="Choisis un Pokemon"
-        matInput
-        [formControl]="myForm"
-        [matAutocomplete]="auto"
-        [(ngModel)]="pokemon"
-      />
-
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of (filteredPokemon | async)" [value]="option">
-          {{ option }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-  </form>
-
-</div>
+<app-input-pokemon></app-input-pokemon>
 
 <div class="wrapper">
     <h3>Type 1 : {{typeOne.getElement()}}</h3>

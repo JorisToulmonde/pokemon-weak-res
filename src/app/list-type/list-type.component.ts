@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Type } from '../types/Type';
-import { TypesService } from '../types.service';
+import { TypesService } from '../services/types.service';
 import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import pokemonFr from '../../assets/dictionnary/pokemon-fr.json';
 
 @Component({
   selector: 'app-list-type',
@@ -22,30 +21,20 @@ export class ListTypeComponent implements OnInit {
   finalWeaknesses = {};
   finalResists = {};
   finalIgnore = [];
+
+  pokemonSubscription: Subscription;
   pokemon: string;
-
-  myForm = new FormControl();
-  pokemons: string[] = pokemonFr;
-  filteredPokemon: Observable<string[]>;
-
-  private pokemonApi = "https://pokeapi.co/api/v2/pokemon/";
 
   constructor(private typesService : TypesService, private httpClient: HttpClient) { }
 
   ngOnInit() {
     this.allTypes = this.typesService.getAllTypes();
-
-    this.filteredPokemon = this.myForm.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.pokemons.filter(pokemon => pokemon.toLowerCase().startsWith(filterValue));
+    this.pokemonSubscription = this.typesService.pokemonSubject.subscribe(
+      (pokemon: string) => {
+        this.pokemon = pokemon;
+        this.onSubmit();
+      }
+    );
   }
 
   weakAndRes(element: string){
@@ -130,10 +119,15 @@ export class ListTypeComponent implements OnInit {
   }
 
   onSubmit(){
+    //Il faut mettre la premiere lettre en majuscule pour respecter la case du dictionnaire.
     let id = this.typesService.getId(this.pokemon.charAt(0).toUpperCase() + this.pokemon.slice(1));
+
+    //Si un id est trouvé dans le dictionnaire avec le nom du pokemon choisit, on lance la requete vers l'api pokeApi pour recuperer les types du pokemon.
     if(id != -1){
-      this.httpClient.get(this.pokemonApi+id).subscribe((response:any) => {
+      this.httpClient.get(this.typesService.getApiURL()+id).subscribe((response:any) => {
         let typeOne = response.types[0].type.name;
+
+        //Le second type peut etre nul car un pokemon peut n'avoir qu'un seul type. Il faut donc regarder si le type existe avant.
         let typeTwo = response.types[1] === undefined ? undefined : response.types[1].type.name;
         typeOne = this.getFrTypeOf(typeOne);
         typeOne = this.getTypeBy(typeOne);
