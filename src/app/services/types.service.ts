@@ -19,6 +19,7 @@ import { Dragon } from '../types/Dragon';
 import { Combat } from '../types/Combat';
 import { Normal } from '../types/Normal';
 import pokemonFr from '../../assets/dictionnary/pokemon-fr.json';
+import pokemonEn from '../../assets/dictionnary/pokemon-en.json';
 import typeEn from '../../assets/dictionnary/type-en.json';
 import typeFr from '../../assets/dictionnary/type-fr.json';
 import { Subject } from 'rxjs';
@@ -68,7 +69,7 @@ export class TypesService {
     this.acier.initializeYou([this.combat, this.feu, this.sol], [this.acier, this.dragon, this.fee, this.glace, this.insecte, this.normal, this.plante, this.psy, this.roche, this.vol], [this.poison]);
     this.combat.initializeYou([this.fee, this.psy, this.vol], [this.insecte, this.roche, this.tenebre], []);
     this.dragon.initializeYou([this.dragon, this.fee, this.glace], [this.eau, this.electrik, this.feu, this.plante], []);
-    this.eau.initializeYou([this.plante, this.electrik, this.vol], [this.acier, this.eau, this.feu, this.glace], []);
+    this.eau.initializeYou([this.plante, this.electrik], [this.acier, this.eau, this.feu, this.glace], []);
     this.electrik.initializeYou([this.sol], [this.acier, this.electrik, this.vol], []);
     this.fee.initializeYou([this.acier, this.poison], [this.combat, this.insecte, this.tenebre], [this.dragon]);
     this.feu.initializeYou([this.sol, this.roche, this.eau], [this.feu, this.acier, this.fee, this.glace, this.insecte, this.plante], []);
@@ -137,12 +138,16 @@ export class TypesService {
     return typeFr[typeEn.indexOf(type.charAt(0).toUpperCase()+type.slice(1))];
   }
 
-  getId(pokemon: string){
+  getById(pokemon: string){
     return pokemonFr.indexOf(pokemon) + 1;
   }
 
   getTypeBy(element: string){
     return this.allTypes.filter(x => x.element === element)[0];
+  }
+
+  getByName(element: string){
+    return pokemonEn[pokemonFr.indexOf(element)];
   }
 
   getApiURL(){

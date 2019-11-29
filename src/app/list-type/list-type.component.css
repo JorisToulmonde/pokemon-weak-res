@@ -1,5 +1,13 @@
 * {box-sizing: border-box;}
 
+.container{
+  width: 70%;
+  margin: 3% auto 0;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, .7);
+  border-radius: 50px;
+}
+
 .wrapper {
   max-width: 500px;
   margin: 1% auto 3%;
@@ -11,6 +19,25 @@
 
 .wrapper > div > div > p{
   margin: 0;
+}
+
+.types-and-sprite{
+  text-align: center;
+  height: 96px;
+}
+
+.types-and-sprite > h3, img{
+  display: inline;
+  line-height: 96px;
+}
+
+.types-and-sprite > h3{
+  margin: 0 25px;
+  color: white;
+}
+
+.types-and-sprite > img{
+  position: absolute;
 }
 
 .result{
