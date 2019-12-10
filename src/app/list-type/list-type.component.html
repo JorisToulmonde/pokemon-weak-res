@@ -11,8 +11,8 @@
 
   <div class="wrapper">
     <div *ngFor="let type of allTypes; let i = index" (click)="weakAndRes(type.getElement())">
-      <div [className]="type.getElement()+' type'" [class.type-selected]="isTypeSelected(type)">
-          <p [class.p-selected]="isTypeSelected(type)">{{ type.getElement() }}</p>
+      <div [className]="type.getElement()+' type'" [ngClass]="{'type-selected': isTypeSelected(type)}">
+          <p [ngClass]="{'p-selected': isTypeSelected(type)}">{{ type.getElement() }}</p>
       </div>
     </div>
   </div>
