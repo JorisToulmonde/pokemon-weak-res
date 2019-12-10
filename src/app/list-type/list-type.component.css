@@ -98,8 +98,9 @@
 }
 
 .type:hover {
-  opacity: .7;
   cursor: pointer;
+  transform: scale(1.05);
+  font-weight: bold;
 }
 
 .Feu {
