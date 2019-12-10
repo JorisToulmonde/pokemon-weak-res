@@ -211,35 +211,44 @@
   background-color: #ffffaa;
 }
 
-@media screen and (max-width: 450px){
+@media screen and (max-width: 700px){
+
+  .types-and-sprite > :first-child{
+    margin-left: -30%;
+  }
+
   .type {
-    width: 70px;
+    width: 85px;
+  }
+
+  .wrapper > div{
+    margin: 0 auto;
+  }
+
+}
+
+@media screen and (max-width: 520px){
+
+  .container{
+    width: 90%;
   }
 
   .wrapper > div > div > p{
-    font-size: 10px;
+    font-size: 15px;
   }
 
   .types-and-sprite > h3{
     font-size: 15px;
   }
-  
+
 }
 
 @media screen and (max-width: 360px){
-  .type {
-    width: 60px;
-  }
 
   .types-and-sprite > h3{
     font-size: 12px;
     margin: 0 10px;
   }
 
-  .types-and-sprite:first-child{
-    margin-left: -30%;
-  }
-  
-  
 }
 
