@@ -28,7 +28,7 @@ export class ListTypeComponent implements OnInit {
   sprite: string;
   isDisplaySprite = false;
 
-  constructor(private typesService : TypesService, private httpClient: HttpClient) { }
+  constructor(private typesService : TypesService) { }
 
   ngOnInit() {
     this.allTypes = this.typesService.getAllTypes();
@@ -42,13 +42,11 @@ export class ListTypeComponent implements OnInit {
 
   weakAndRes(element: string){
     this.removeSprite();
-
     var type = this.allTypes.find(x => x.element === element);
 
     if(this.checkSameTypeSelectedTwice(type)) return;
 
     this.assignType(type);
-
     this.displaySensibities();
   }
 
@@ -126,13 +124,11 @@ export class ListTypeComponent implements OnInit {
   onSubmit(){
     this.removeSprite();
     //Il faut mettre la premiere lettre en majuscule pour respecter la case du dictionnaire.
-    let id = this.typesService.getByName(this.pokemon.charAt(0).toUpperCase() + this.pokemon.slice(1));
-
-    //Si un id est trouvé dans le dictionnaire avec le nom du pokemon choisit, on lance la requete vers l'api pokeApi pour recuperer les types du pokemon.
-    if(id != undefined){
-      this.httpClient.get(this.typesService.getApiURL()+id.toLowerCase()).subscribe((response:any) => {
-        this.handleTypes(response);
-        this.handleSprite(response);
+    let name = this.typesService.getByName(this.pokemon.charAt(0).toUpperCase() + this.pokemon.slice(1));
+    if(name !== null){
+      let res = this.typesService.getPokemonFromName(name).then(res => {
+        this.handleTypes(res);
+        this.handleSprite(res);
       });
     }
   }

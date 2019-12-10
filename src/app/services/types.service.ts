@@ -23,6 +23,8 @@ import pokemonEn from '../../assets/dictionnary/pokemon-en.json';
 import typeEn from '../../assets/dictionnary/type-en.json';
 import typeFr from '../../assets/dictionnary/type-fr.json';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { resolve } from 'url';
 
 @Injectable({
   providedIn: 'root'
@@ -61,7 +63,7 @@ export class TypesService {
 
   private pokemonApi = "https://pokeapi.co/api/v2/pokemon/";
 
-  constructor() {
+  constructor(private httpClient: HttpClient) {
     this.initializeTypes();
   }
 
@@ -95,7 +97,6 @@ export class TypesService {
   }
 
   getWeaknessesAndResistances(typeOne: Type, typeTwo: Type){
-
     let weaknessT1 = typeOne.getWeaknesses();
     let weaknessT2 = typeTwo.getWeaknesses();
     let resistT1 = typeOne.getResistances();
@@ -152,5 +153,15 @@ export class TypesService {
 
   getApiURL(){
     return this.pokemonApi;
+  }
+
+  getPokemonFromName(name: string): Promise<any>{
+    let promise = new Promise((resolve, reject) => {
+      this.httpClient.get(this.getApiURL()+name.toLowerCase()).subscribe((response:any) => {
+        let res = response;
+        resolve(res);
+      });
+    });
+    return promise;
   }
 }
