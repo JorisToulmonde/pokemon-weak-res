@@ -22,7 +22,7 @@ import pokemonFr from '../../assets/dictionnary/pokemon-fr.json';
 import pokemonEn from '../../assets/dictionnary/pokemon-en.json';
 import typeEn from '../../assets/dictionnary/type-en.json';
 import typeFr from '../../assets/dictionnary/type-fr.json';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { resolve } from 'url';
 
@@ -155,13 +155,7 @@ export class TypesService {
     return this.pokemonApi;
   }
 
-  getPokemonFromName(name: string): Promise<any>{
-    let promise = new Promise((resolve, reject) => {
-      this.httpClient.get(this.getApiURL()+name.toLowerCase()).subscribe((response:any) => {
-        let res = response;
-        resolve(res);
-      });
-    });
-    return promise;
+  getPokemonFromName(name: string): Observable<any>{
+    return this.httpClient.get(this.getApiURL()+name.toLowerCase());
   }
 }

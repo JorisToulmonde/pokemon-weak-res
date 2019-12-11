@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Type } from '../types/Type';
 import { TypesService } from '../services/types.service';
-import { HttpClient } from '@angular/common/http';
-import { FormControl } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list-type',
@@ -126,27 +123,20 @@ export class ListTypeComponent implements OnInit {
     //Il faut mettre la premiere lettre en majuscule pour respecter la case du dictionnaire.
     let name = this.typesService.getByName(this.pokemon.charAt(0).toUpperCase() + this.pokemon.slice(1));
     if(name !== null){
-      let res = this.typesService.getPokemonFromName(name).then(res => {
-        this.handleTypes(res);
-        this.handleSprite(res);
+      let res = this.typesService.getPokemonFromName(name).subscribe(res => {
+        let typeOne = res.types[0].type.name;
+        let typeTwo = res.types[1] === undefined ? undefined : res.types[1].type.name;
+        let sprite = res.sprites.front_default;
+
+        this.handleTypes(typeOne, typeTwo);
+        this.handleSprite(sprite);
       });
     }
   }
 
-  handleTypes(response: any){
-    let typeOne = response.types[0].type.name;
-
-    //Le second type peut etre nul car un pokemon peut n'avoir qu'un seul type. Il faut donc regarder si le type existe avant.
-    let typeTwo = response.types[1] === undefined ? undefined : response.types[1].type.name;
-    typeOne = this.getFrTypeOf(typeOne);
-    typeOne = this.getTypeBy(typeOne);
-
-    if(typeTwo != undefined){
-      typeTwo = this.getFrTypeOf(typeTwo);
-      typeTwo = this.getTypeBy(typeTwo);
-    }else{
-      typeTwo = this.typesService.type;
-    }
+  handleTypes(firstType: string, secondType: string){
+    let typeOne = this.getTypeBy(this.getFrTypeOf(firstType));
+    let typeTwo = (secondType != undefined) ? this.getTypeBy(this.getFrTypeOf(secondType)) : this.typesService.type;
 
     this.typeOne = typeOne;
     this.typeTwo = typeTwo;
@@ -155,8 +145,8 @@ export class ListTypeComponent implements OnInit {
     this.displaySensibities();
   }
 
-  handleSprite(response: any){
-    this.sprite = response.sprites.front_default;
+  handleSprite(sprite: any){
+    this.sprite = sprite;
     if(this.sprite != null){
       this.isDisplaySprite = true;
     }
