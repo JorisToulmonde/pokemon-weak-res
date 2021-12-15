@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Type } from '../types/Type';
 import { TypesService } from '../services/types.service';
 import { Subscription } from 'rxjs';
+import { Type, Types } from '../types/types';
 
 @Component({
   selector: 'app-list-type',
@@ -9,10 +9,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./list-type.component.css']
 })
 export class ListTypeComponent implements OnInit {
-
+  
   allTypes: Array<Type>;
-  typeOne = new Type();
-  typeTwo = new Type();
+  typeOne = this.getDefaultType();
+  typeTwo = this.getDefaultType();
   nbTypeSelected = 0;
   reset = false;
   finalWeaknesses = {};
@@ -56,7 +56,7 @@ export class ListTypeComponent implements OnInit {
   }
 
   isTypeSelected(type: Type){
-    return this.typeOne.getElement() === type.getElement() || this.typeTwo.getElement() === type.getElement();
+    return this.typeOne.element === type.element || this.typeTwo.element === type.element;
   }
 
   assignType(type: Type){
@@ -72,14 +72,14 @@ export class ListTypeComponent implements OnInit {
 
   checkNbTypeSelected(){
     if(this.reset){
-      this.typeOne = this.typeTwo = this.typesService.type;
+      this.typeOne = this.typeTwo = this.getDefaultType();
       this.nbTypeSelected = 0;
       this.reset = false;
     }
   }
 
   checkSameTypeSelectedTwice(type: Type){
-    if(type === this.typeOne){
+    if(type.element === this.typeOne.element){
       this.nbTypeSelected = 1;
       return true;
     }
@@ -110,11 +110,11 @@ export class ListTypeComponent implements OnInit {
     return this.finalIgnore.indexOf(element) != -1;
   }
 
-  getFrTypeOf(type: string){
+  getFrTypeOf(type: Types){
     return this.typesService.getFrTypeOf(type);
   }
 
-  getTypeBy(element: string){
+  getTypeBy(element: Types){
     return this.typesService.getTypeBy(element);
   }
 
@@ -134,9 +134,9 @@ export class ListTypeComponent implements OnInit {
     }
   }
 
-  handleTypes(firstType: string, secondType: string){
+  handleTypes(firstType: Types, secondType: Types){
     let typeOne = this.getTypeBy(this.getFrTypeOf(firstType));
-    let typeTwo = (secondType != undefined) ? this.getTypeBy(this.getFrTypeOf(secondType)) : this.typesService.type;
+    let typeTwo = (secondType != undefined) ? this.getTypeBy(this.getFrTypeOf(secondType)) : this.getDefaultType();
 
     this.typeOne = typeOne;
     this.typeTwo = typeTwo;
@@ -155,6 +155,16 @@ export class ListTypeComponent implements OnInit {
   removeSprite(){
     this.isDisplaySprite = false;
     this.sprite = null;
+  }
+
+  getDefaultType() {
+    return {
+      element: undefined,
+      weaknesses: [],
+      resistances: [],
+      ignore: [],
+      icon: ''
+    }
   }
 
 }

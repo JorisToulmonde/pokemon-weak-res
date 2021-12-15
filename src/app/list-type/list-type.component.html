@@ -3,16 +3,16 @@
   <app-input-pokemon></app-input-pokemon>
 
   <div class="types-and-sprite">
-    <h3 *ngIf="typeOne.element != 'Vide'">Type 1 : {{typeOne.getElement()}}</h3>
-    <h3 *ngIf="typeTwo.element != 'Vide'">Type 2 : {{typeTwo.getElement()}}</h3>
+    <h3 *ngIf="typeOne.element != ''">Type 1 : {{typeOne.element}}</h3>
+    <h3 *ngIf="typeTwo.element != ''">Type 2 : {{typeTwo.element}}</h3>
     <img *ngIf="isDisplaySprite" [src]="sprite" />
   </div>
 
 
   <div class="wrapper">
-    <div *ngFor="let type of allTypes; let i = index" (click)="weakAndRes(type.getElement())">
-      <div [className]="type.getElement()+' type'" [ngClass]="{'type-selected': isTypeSelected(type)}">
-          <p [ngClass]="{'p-selected': isTypeSelected(type)}">{{ type.getElement() }}</p>
+    <div *ngFor="let type of allTypes; let i = index" (click)="weakAndRes(type.element)">
+      <div [className]="type.element+' type'" [ngClass]="{'type-selected': isTypeSelected(type)}">
+          <p [ngClass]="{'p-selected': isTypeSelected(type)}">{{ type.element }}</p>
       </div>
     </div>
   </div>
